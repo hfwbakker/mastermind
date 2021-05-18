@@ -8,56 +8,83 @@
 * in this case, the computer is the code creator
 '''
 
-
-feedback_pins = ["WHITE", "BLACK"]
-the_code = ["___", "___", "___", "___"]
 guess_board = ["___", "___", "___", "___"]
+code_pins = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
+feedback_pins = ["WHITE", "BLACK"]
+# the_code = ["___", "___", "___", "___"]
 
-# 1 - Computer randomly generates a code
-def code_generator
-  @code_pins = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
-  # @the_code = [code_pins[rand(5)], code_pins[rand(5)], code_pins[rand(5)], code_pins[rand(5)]]
-  @the_code = ["RED", "BLUE", "BLUE", "BLUE"]
-  # print @the_code
+# main game class
+class Mastermind
+  def initialize(board, code_pins, feedback_pins)
+    @board = board
+    @code_pins = code_pins
+    @feedback_pins = feedback_pins
+  end
+
+  def print_board
+    print("Executing print_board\n")
+    print "#{@board}\n"
+  end
 end
-# 2 - Computer (or player) declares round (12 as standard)
-# 3 - Player makes a guess
-def make_guess
-  @guess = ["RED", "RED", "RED", "RED"]
+
+# class for guesser
+class Guesser < Mastermind
+  def self.make_guess
+    print("<<<Executing make_guess>>>\n")
+    @board[0] = gets.chomp
+    @board[1] = gets.chomp
+    @board[2] = gets.chomp
+    @board[3] = gets.chomp
+    print("New board = #{@board}\n")
+  end
 end
-# 4 - Computer checks guess and gives feedback or declares win
-def give_feedback
-  feedback = []
-  # check exact match (place + color)
-  (0..@the_code.length-1).each do |i|
-    if @guess[i] == @the_code[i]
-      feedback.append("WHITE")
-    elsif @the_code.include? @guess[i]
-      feedback.append("BLACK")
+
+# class for codemaker
+class Codemaker < Mastermind
+  def generate_code
+    print("<<<Executing generate_code>>>\n")
+    @the_code = [@code_pins[rand(5)], @code_pins[rand(5)], @code_pins[rand(5)], @code_pins[rand(5)]]
+    print "the code is: #{@the_code}\n"
+  end
+
+  def check_guess
+    print("<<<Executing check_guess>>>\n")
+    print "guess = #{@board}\n"
+    print "code = #{@the_code}\n"
+    if @board == @the_code
+      puts "YOU WIN"
+      exit(0)
     else
-      "NOPE"
+      puts "YOU DONT WIN.... YET"
+      give_feedback
+    end 
+  end
+
+  def give_feedback
+    print("<<<Executing give_feedback>>>\n")
+    feedback = []
+    # check exact match (place + color)
+    (0..@the_code.length-1).each do |i|
+      if @board[i] == @the_code[i]
+        feedback.append('BLACK')
+      elsif (@the_code.include? @board[i]) && (@board[i] != @the_code[i])
+        feedback.append('WHITE')
+      else
+        'NOPE'
+      end
     end
-  end
-  print feedback
-end
-
-def check_guess
-  print "guess = #{@guess}\n"
-  print "code = #{@the_code}\n"
-  if @guess == @the_code
-    puts "YOU WIN"
-  else
-    puts "YOU DONT WIN"
-    give_feedback
+    feedback = feedback.sort
+    print feedback
   end
 end
-# 5 - Player guesses again
-# 6 - Computer gives feedback again
-# . - /\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# 8 - Player wins when he gets it right OR player loses when turns expire.
 
+test = Mastermind.new(guess_board, code_pins, feedback_pins)
+henri = Guesser.new(guess_board, code_pins, feedback_pins)
+deja = Codemaker.new(guess_board, code_pins, feedback_pins)
+deja.generate_code
 
-code_generator
-make_guess
-check_guess
-give_feedback
+i = 10
+while i >= 0
+  henri.make_guess
+  i -= 1
+end
