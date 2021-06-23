@@ -29,7 +29,8 @@ end
 
 # class for guesser
 class Guesser < Mastermind
-  def self.make_guess
+  # def self.make_guess
+  def make_guess
     print("<<<Executing make_guess>>>\n")
     @board[0] = gets.chomp
     @board[1] = gets.chomp
@@ -83,8 +84,14 @@ henri = Guesser.new(guess_board, code_pins, feedback_pins)
 deja = Codemaker.new(guess_board, code_pins, feedback_pins)
 deja.generate_code
 
-i = 10
-while i >= 0
+# henri.make_guess
+
+# game loop
+amount_of_rounds = 3
+
+i = amount_of_rounds
+while i >= 1
+  print "Rounds remaining: #{i}."
   henri.make_guess
   i -= 1
 end

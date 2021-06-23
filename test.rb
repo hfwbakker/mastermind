@@ -21,8 +21,8 @@ class Dochter < Vader
 end
 
 frans = Vader.new(100)
-henri = Zoon.new
-sophie = Dochter.new
+henri = Zoon.new(50)
+sophie = Dochter.new(10)
 
 # Can I initialize Zoon or Dochter without re-initializing the same value (geld) as parent class? Can I intialize them with their "own copy" of geld that cant be edited by other classes?
 

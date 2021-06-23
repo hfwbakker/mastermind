@@ -19,18 +19,23 @@ Build a Mastermind game from the command line where you have 12 turns to guess t
     # 8 - Player wins when he gets it right OR player loses when turns expire.
 
 NEXT UP:
-- gets.chomp take more than one value?
-- figure out game loop
+- gets.chomp take more than one value? -> maybe something like scanf?
+- Need to add some sort of input validation.
+- figure out game loop -> maybe with a simple while loop taking amount of rounds as an argument that breaks if a win condition is met?
 - Check out the questions in test.rb
 
 LOG:
+--- Wednesday June 23rd ---
+- Back in the saddle after more than a month, need to review things a bit.
+- self.make_guess in "Guesser" didn't work so turned it into a function. Will have to determine what the consequences, if any, are.
+- Will likely do game loop with a while loop.
+
 --- Tuesday May 18th ---
 Day 2 of Mastermind
 - Created main class (Mastermind) and two sub classes (Guesser, Codemaker). All three can succesfully read into the same board info.
 - All class methods are now implemented correctly and seem to interact correctly.
 - give_feedback now gives feedback correctly... i think?
 - Some things I clearly don't yet get about classes lol.
-
 
 --- Wednesday May 12th ---
 Day 1 of Mastermind
