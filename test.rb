@@ -1,29 +1,21 @@
-class Vader
-  def initialize(geld)
-    @geld = geld
+@board = ["___", "___", "___", "___"]
+
+
+def make_guess
+  print("Input colors, seperated by a space. \n> ")
+  code_input = gets.chomp.upcase
+  input_arguments = code_input.split(' ')
+
+  if input_arguments.length != 4
+    print("Invalid input. Try again.\n")
+    make_guess
+  else
+    # print input_arguments
+    (0..input_arguments.length-1).each do |i|
+      @board[i] = input_arguments[i]
+    end
+    print(@board)
   end
 end
 
-class Zoon < Vader
-  def self.initialize; end
-
-  def zoon_dingen
-    print("scharminkelig gezeur\n")
-  end
-end
-
-class Dochter < Vader
-  def self.initialize; end
-
-  def dochter_dingen
-    print("elegant gebrabbel\n")
-  end
-end
-
-frans = Vader.new(100)
-henri = Zoon.new(50)
-sophie = Dochter.new(10)
-
-# Can I initialize Zoon or Dochter without re-initializing the same value (geld) as parent class? Can I intialize them with their "own copy" of geld that cant be edited by other classes?
-
-# How to call zoon_dingen from instance of Dochter?
+make_guess

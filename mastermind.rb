@@ -31,12 +31,20 @@ end
 class Guesser < Mastermind
   # def self.make_guess
   def make_guess
-    print("<<<Executing make_guess>>>\n")
-    @board[0] = gets.chomp
-    @board[1] = gets.chomp
-    @board[2] = gets.chomp
-    @board[3] = gets.chomp
-    print("New board = #{@board}\n")
+    print("Input colors, seperated by a space. \n> ")
+    code_input = gets.chomp.upcase
+    input_arguments = code_input.split(' ')
+  
+    if input_arguments.length != 4
+      print("Invalid input. Try again.\n")
+      make_guess
+    else
+      # print input_arguments
+      (0..input_arguments.length-1).each do |i|
+        @board[i] = input_arguments[i]
+      end
+      print(@board)
+    end
   end
 end
 
@@ -62,21 +70,38 @@ class Codemaker < Mastermind
   end
 
   def give_feedback
-    print("<<<Executing give_feedback>>>\n")
     feedback = []
-    # check exact match (place + color)
+    the_code_copy = @the_code.dup
+    board_copy = @board.dup
+    print("BLACK TEST\n")
+    print("the code:#{the_code_copy}\n")
+    print("the board #{board_copy}\n")
     (0..@the_code.length-1).each do |i|
-      if @board[i] == @the_code[i]
-        feedback.append('BLACK')
-      elsif (@the_code.include? @board[i]) && (@board[i] != @the_code[i])
-        feedback.append('WHITE')
-      else
-        'NOPE'
+      if @the_code[i] == @board[i]
+        print("#{@the_code[i]} matches #{@board[i]}\n")
+        feedback.append("BLACK")
+        the_code_copy.delete(@the_code[i])
+        board_copy.delete(@board[i])
       end
     end
-    feedback = feedback.sort
-    print feedback
+  
+    print("WHITE TEST\n")
+    print("the code:#{the_code_copy}\n")
+    print("the board #{board_copy}\n")
+    for i in board_copy
+      for j in the_code_copy
+        if i == j
+          print("i:#{i} matches j:#{j}\n")
+          the_code_copy.delete(i)
+          feedback.append("WHITE")
+        end
+      end
+    end
+    print("code = #{@the_code}\n")
+    print("guess = #{@board}\n")
+    print ("feedback: #{feedback}\n")
   end
+
 end
 
 test = Mastermind.new(guess_board, code_pins, feedback_pins)
@@ -84,14 +109,14 @@ henri = Guesser.new(guess_board, code_pins, feedback_pins)
 deja = Codemaker.new(guess_board, code_pins, feedback_pins)
 deja.generate_code
 
-# henri.make_guess
-
 # game loop
-amount_of_rounds = 3
+amount_of_rounds = 10
 
 i = amount_of_rounds
 while i >= 1
-  print "Rounds remaining: #{i}."
+  print "Rounds remaining: #{i}.\n"
   henri.make_guess
+  deja.check_guess
+  # deja.give_feedback
   i -= 1
 end

@@ -19,12 +19,15 @@ Build a Mastermind game from the command line where you have 12 turns to guess t
     # 8 - Player wins when he gets it right OR player loses when turns expire.
 
 NEXT UP:
-- gets.chomp take more than one value? -> maybe something like scanf?
 - Need to add some sort of input validation.
-- figure out game loop -> maybe with a simple while loop taking amount of rounds as an argument that breaks if a win condition is met?
-- Check out the questions in test.rb
+
 
 LOG:
+--- THursday June 24th ---
+- Give_feedback logic now works properly.
+- Game loop works properly. Amount of rounds can be adjusted in code.
+- One line input is now possible by splitting (and validating) input string and assiging to @board values.
+
 --- Wednesday June 23rd ---
 - Back in the saddle after more than a month, need to review things a bit.
 - self.make_guess in "Guesser" didn't work so turned it into a function. Will have to determine what the consequences, if any, are.
